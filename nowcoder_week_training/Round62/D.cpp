@@ -58,6 +58,7 @@ void solve(){
 int main()
 {
     int _ = 1;
+    cout<<"哈哈";
     //cin>>_;
     //cout<<5*inv(2)<<'\n';
     while(_--){
