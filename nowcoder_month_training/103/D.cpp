@@ -23,7 +23,7 @@ void solve()
             if(b[i]==b[j])
                 v2.insert((a[i]+a[j])/2);
             else{
-                double k=1/((b[j]-b[i])/(a[j]-a[i]));
+                double k=-1/((b[j]-b[i])/(a[j]-a[i]));
                 double bb=b[j]-k*a[j];
                 v.insert({k,bb});
             }
