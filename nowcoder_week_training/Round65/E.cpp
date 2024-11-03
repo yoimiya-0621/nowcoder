@@ -31,7 +31,11 @@ void solve()
             if(c[i]>=50)
             c[i]=-50;
         }
+        if(c[i+1]!=-999)
         mi+=c[i]-c[i+1]>=x?1:0;
+        else{
+            ;
+        }
     }
     cout<<ma<<' '<<mi;
 }
