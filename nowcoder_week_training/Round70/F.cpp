@@ -6,51 +6,65 @@ using namespace std;
 #define vi vector<int>
 #define pi pair<int,int>
 const int mod = 1e9+7;
-const int N = 2e5+10;
+const int N = 6e4+10;
 int n,k;
-int a[N];
+int a[N],v[N];
+int check(int x)
+{
+    if(x>k||x<1)
+        return 0;
+    for(int i=0;i<n-1;i++)
+    {
+        if(v[i]%(min(a[i],a[i+1])+x))
+            return 0;
+    }
+    return 1;
+}
 void solve(){
     cin>>n>>k;
-    int m=1e9+10,mm=1e9+10;
-    vi v;
+    int m=1e9+10,bmin;
     for(int i=0;i<n;i++){
         cin>>a[i];
-        mm=min(a[i],mm);
-        if(i>0){
-            v.push_back(abs(a[i]-a[i-1]));
-            m=min(m,abs(a[i]-a[i-1]));
-        }
-    }    
-    deque<int>d;
-    for(int i=1;i<=sqrt(m);i++){
-        if(m%i==0){
-            d.push_front(mm-i);
-            d.push_back(mm-m/i);
-        }
-    }
-    int cnt=0,sum=0;
-    for(int i=0;i<d.size();i++){
-        int flag=0;
-        for(int j=0;j<n-1;j++){
-            if(max(a[j+1]+d[i],a[j]+d[i])%min(a[j+1]+d[i],a[j]+d[i])!=0)
+        v[i-1]=abs(a[i]-a[i-1]);
+        if(i>0&&a[i]!=a[i-1]){
+            if(abs(a[i]-a[i-1])<m)
             {
-                flag=1;
-                break;
+                m=abs(v[i-1]);
+                bmin=min(a[i],a[i-1]);
             }
         }
-        if(!flag){
-            cnt++;
-            sum+=d[i];
-        }
+    }    
+    if(n==1||m==1e9+10){
+        cout<<k<<' '<<k*(k+1)/2<<'\n';
+        return ;
+    }
+    int cnt=0,sum=0,x;
+    for(int z=1;z<=(int)sqrt(m);++z)
+    {
+        if(m%z==0)
+        {
+            x=m/z-bmin;
+            if(check(x)){
+                cnt++;
+                sum+=x;
+            }
+            x=m/(m/z)-bmin;
+            if(check(x)){
+                cnt++;
+                sum+=x;
+            }
+            
+        }        
     }
     cout<<cnt<<' '<<sum<<'\n';
+    
 }
 signed main(){
     ios::sync_with_stdio(false);
     cin.tie(0);
     cout.tie(0);
     int _ = 1;
-    cin>>_;
+    cin>>_ ;
     while(_--){
         solve();
     }
